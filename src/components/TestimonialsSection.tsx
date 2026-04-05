@@ -35,8 +35,8 @@ const TestimonialsSection = () => {
           <span className="font-body text-sm font-semibold text-primary uppercase tracking-widest">
             What Our Clients Say
           </span>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-foreground mt-3">
-            Real Reviews from <span className="text-gradient-warm">Real Events</span>
+          <h2 className="font-display text-4xl md:text-5xl font-bold text-card-foreground mt-3">
+            Real Reviews from <span className="text-neon">Real Events</span>
           </h2>
         </motion.div>
 
@@ -48,21 +48,21 @@ const TestimonialsSection = () => {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: index * 0.15 }}
-              className="bg-card rounded-2xl p-8 shadow-warm relative"
+              className="bg-card rounded-2xl p-8 border border-border hover:border-neon transition-all relative"
             >
               <Quote className="absolute top-6 right-6 w-8 h-8 text-primary/20" />
               <div className="flex gap-1 mb-4">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-warm-gold text-warm-gold" />
+                  <Star key={i} className="w-4 h-4 fill-primary text-primary" />
                 ))}
               </div>
-              <p className="font-body text-foreground/80 leading-relaxed mb-6 italic">"{t.quote}"</p>
+              <p className="font-body text-card-foreground/80 leading-relaxed mb-6 italic">"{t.quote}"</p>
               <div className="flex items-center gap-3">
-                <div className="w-11 h-11 rounded-full bg-gradient-warm flex items-center justify-center text-primary-foreground font-body font-bold text-sm">
+                <div className="w-11 h-11 rounded-full bg-gradient-neon flex items-center justify-center text-primary-foreground font-body font-bold text-sm">
                   {t.initials}
                 </div>
                 <div>
-                  <p className="font-body font-semibold text-foreground text-sm">{t.name}</p>
+                  <p className="font-body font-semibold text-card-foreground text-sm">{t.name}</p>
                   <p className="font-body text-muted-foreground text-xs">{t.company}</p>
                 </div>
               </div>

@@ -6,17 +6,18 @@ const navLinks = [
   { label: "Home", href: "#" },
   { label: "Services", href: "#services" },
   { label: "Programs", href: "#programs" },
+  { label: "Gallery", href: "#gallery" },
   { label: "Reviews", href: "#reviews" },
-  { label: "Book Event", href: "#contact" },
+  { label: "Book IRL Events", href: "#contact" },
 ];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b border-border">
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-background/90 backdrop-blur-lg border-b border-border">
       <div className="container mx-auto flex items-center justify-between h-16 px-4">
-        <a href="#" className="font-display text-2xl font-bold text-primary tracking-tight">
+        <a href="#" className="font-display text-2xl font-bold text-neon tracking-tight">
           IRL Events
         </a>
 
@@ -25,7 +26,7 @@ const Navbar = () => {
             <a
               key={link.label}
               href={link.href}
-              className="font-body text-sm font-medium text-foreground/70 hover:text-primary transition-colors"
+              className="font-body text-sm font-medium text-card-foreground/70 hover:text-primary transition-colors"
             >
               {link.label}
             </a>
@@ -34,13 +35,13 @@ const Navbar = () => {
 
         <a
           href="tel:6305509595"
-          className="hidden md:flex items-center gap-2 bg-gradient-warm text-primary-foreground px-5 py-2.5 rounded-full font-body font-semibold text-sm shadow-warm hover:opacity-90 transition-opacity"
+          className="hidden md:flex items-center gap-2 bg-gradient-neon text-primary-foreground px-5 py-2.5 rounded-full font-body font-semibold text-sm shadow-neon hover:opacity-90 transition-opacity"
         >
           <Phone className="w-4 h-4" />
-          Call Now
+          CALL NOW!
         </a>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden text-foreground">
+        <button onClick={() => setOpen(!open)} className="md:hidden text-card-foreground">
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
       </div>
@@ -59,14 +60,14 @@ const Navbar = () => {
                   key={link.label}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="font-body text-foreground/80 hover:text-primary py-2 transition-colors"
+                  className="font-body text-card-foreground/80 hover:text-primary py-2 transition-colors"
                 >
                   {link.label}
                 </a>
               ))}
               <a
                 href="tel:6305509595"
-                className="flex items-center justify-center gap-2 bg-gradient-warm text-primary-foreground px-5 py-3 rounded-full font-body font-semibold mt-2"
+                className="flex items-center justify-center gap-2 bg-gradient-neon text-primary-foreground px-5 py-3 rounded-full font-body font-semibold mt-2"
               >
                 <Phone className="w-4 h-4" />
                 (630) 550-9595
