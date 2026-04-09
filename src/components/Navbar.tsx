@@ -1,4 +1,5 @@
 import { useState } from "react";
+import irlLogo from "@/assets/irl-logo.png";
 import { Phone, Menu, X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
