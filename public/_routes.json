@@ -1,0 +1,10 @@
+{
+  "version": 1,
+  "routes": [
+    { "pattern": "/assets/*", "serve": "/assets/*" },
+    { "pattern": "/favicon.png", "serve": "/favicon.png" },
+    { "pattern": "/favicon.ico", "serve": "/favicon.ico" },
+    { "pattern": "/robots.txt", "serve": "/robots.txt" },
+    { "pattern": "/*", "serve": "/index.html" }
+  ]
+}

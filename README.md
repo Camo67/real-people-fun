@@ -76,6 +76,23 @@ npm run lint
 - The dev server uses Vite, which serves `public/` assets directly under the root path.
 - The gallery currently renders a verified video item from the `public/` directory.
 
+## Cloudflare Deployment
+
+This project is prepped for Cloudflare Pages deployment.
+
+- Build command: `npm run build`
+- Build output directory: `dist`
+- Cloudflare Pages workflow created at `.github/workflows/cloudflare-pages.yml`
+- SPA route fallback configured with `public/_routes.json`
+
+### Setup
+
+1. Create a Cloudflare Pages project connected to this repository.
+2. Add repository secrets:
+   - `CLOUDFLARE_API_TOKEN`
+   - `CLOUDFLARE_ACCOUNT_ID`
+3. Push to `main` to trigger the deployment workflow.
+
 ## License
 
 This project is private and configured as a non-published application.
