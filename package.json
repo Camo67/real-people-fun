@@ -10,7 +10,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "npm run build && npx wrangler pages publish ./dist --project-name real-people-fun",
+    "deploy": "npm run build",
+    "wrangler:deploy": "npm run build && npx wrangler pages publish ./dist --project-name real-people-fun",
     "test": "vitest run",
     "test:watch": "vitest"
   },
