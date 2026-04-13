@@ -84,6 +84,7 @@ This project is prepped for Cloudflare Pages deployment.
 - Build output directory: `dist`
 - Cloudflare Pages workflow created at `.github/workflows/cloudflare-pages.yml`
 - SPA route fallback configured with `public/_routes.json`
+- If your Pages project settings still use `npm run deploy`, update them to `npm run build`.
 
 ### Setup
 
