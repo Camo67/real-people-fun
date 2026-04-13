@@ -32,6 +32,13 @@ const programs = [
   },
 ];
 
+const galleryItems = [
+  {
+    type: "video",
+    src: "/AQM1KDmBlkgCdoxs9JMkDYc6WbvZGwQKtNGMSrmuOFcYheDWXDpFNa__sMYhquU583bxeAZmaWsLPPrNwrEeLC3qHLpk_CBAMuyyneLm5Q.mp4",
+  },
+];
+
 const ProgramsSection = () => {
   return (
     <section id="programs" className="py-24 bg-muted">
@@ -84,8 +91,8 @@ const ProgramsSection = () => {
         </div>
 
         {/* Extra gallery row */}
-        <div id="gallery" className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {[gameshowImg, brunchImg, kidsImg, boardImg].map((img, i) => (
+        <div id="gallery" className="mt-16 grid grid-cols-1 gap-4">
+          {galleryItems.map((item, i) => (
             <motion.div
               key={i}
               initial={{ opacity: 0, scale: 0.95 }}
@@ -94,7 +101,14 @@ const ProgramsSection = () => {
               transition={{ delay: i * 0.1 }}
               className="rounded-xl overflow-hidden border border-border hover:border-neon transition-all"
             >
-              <img src={img} alt="IRL Event moment" className="w-full h-40 md:h-48 object-cover hover:scale-105 transition-transform duration-500" loading="lazy" width={400} height={300} />
+              <video
+                src={item.src}
+                className="w-full h-72 md:h-96 object-cover"
+                muted
+                loop
+                playsInline
+                controls
+              />
             </motion.div>
           ))}
         </div>
