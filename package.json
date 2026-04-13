@@ -10,8 +10,8 @@
     "build:dev": "vite build --mode development",
     "lint": "eslint .",
     "preview": "npx wrangler pages dev dist",
-    "deploy": "npm run build && npx wrangler pages deploy dist --project-name real-people-fun --branch main --commit-message \"Deploy from Copilot\"",
-    "wrangler:deploy": "npm run build && npx wrangler pages deploy dist --project-name real-people-fun --branch main --commit-message \"Deploy from Copilot\"",
+    "deploy": "npm run build",
+    "wrangler:deploy": "npx wrangler pages deploy dist --project-name real-people-fun --branch main --commit-message \"Deploy from Copilot\"",
     "test": "vitest run",
     "test:watch": "vitest"
   },
