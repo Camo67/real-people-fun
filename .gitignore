@@ -22,3 +22,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Prevent Bun lockfiles from causing Cloudflare Pages to prefer Bun
+bun.lock
+bun.lockb
