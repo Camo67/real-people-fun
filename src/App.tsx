@@ -15,6 +15,7 @@ import {
   ShieldCheck,
   Music, 
   ChevronRight,
+  ChevronLeft,
   ExternalLink,
   X, 
   Circle,
@@ -474,6 +475,117 @@ const ReviewSection = () => {
   );
 };
 
+const DAYS = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+const MONTHS = ['JANUARY','FEBRUARY','MARCH','APRIL','MAY','JUNE','JULY','AUGUST','SEPTEMBER','OCTOBER','NOVEMBER','DECEMBER'];
+
+const BookingCalendar = ({ value, onChange }: { value: string; onChange: (date: string) => void }) => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const [viewYear, setViewYear] = useState(today.getFullYear());
+  const [viewMonth, setViewMonth] = useState(today.getMonth());
+
+  const firstDay = new Date(viewYear, viewMonth, 1).getDay();
+  const daysInMonth = new Date(viewYear, viewMonth + 1, 0).getDate();
+
+  const prevMonth = () => {
+    if (viewMonth === 0) { setViewMonth(11); setViewYear(y => y - 1); }
+    else setViewMonth(m => m - 1);
+  };
+  const nextMonth = () => {
+    if (viewMonth === 11) { setViewMonth(0); setViewYear(y => y + 1); }
+    else setViewMonth(m => m + 1);
+  };
+
+  const isPast = (day: number) => new Date(viewYear, viewMonth, day) < today;
+  const isWeekend = (day: number) => { const d = new Date(viewYear, viewMonth, day).getDay(); return d === 0 || d === 6; };
+  const toISO = (day: number) => `${viewYear}-${String(viewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+  const selected = value;
+
+  const cells: (number | null)[] = [...Array(firstDay).fill(null), ...Array.from({ length: daysInMonth }, (_, i) => i + 1)];
+  while (cells.length % 7 !== 0) cells.push(null);
+
+  return (
+    <div className="w-full bg-black/40 border border-brand-cyan/20 rounded-2xl p-4 sm:p-5">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
+        <button
+          type="button"
+          onClick={prevMonth}
+          className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-brand-cyan/10 text-gray-400 hover:text-brand-cyan transition-all"
+        >
+          <ChevronLeft className="w-4 h-4" />
+        </button>
+        <div className="text-center">
+          <p className="text-sm sm:text-base font-display font-black tracking-widest uppercase text-white">
+            {MONTHS[viewMonth]} {viewYear}
+          </p>
+        </div>
+        <button
+          type="button"
+          onClick={nextMonth}
+          className="w-8 h-8 flex items-center justify-center rounded-lg bg-white/5 hover:bg-brand-cyan/10 text-gray-400 hover:text-brand-cyan transition-all"
+        >
+          <ChevronRight className="w-4 h-4" />
+        </button>
+      </div>
+
+      {/* Day headers */}
+      <div className="grid grid-cols-7 mb-2">
+        {DAYS.map(d => (
+          <div key={d} className={`text-center text-[9px] sm:text-[10px] font-mono font-bold tracking-wider pb-2 ${d === 'SUN' || d === 'SAT' ? 'text-brand-purple/70' : 'text-gray-600'}`}>
+            {d}
+          </div>
+        ))}
+      </div>
+
+      {/* Day cells */}
+      <div className="grid grid-cols-7 gap-y-1">
+        {cells.map((day, i) => {
+          if (!day) return <div key={i} />;
+          const iso = toISO(day);
+          const past = isPast(day);
+          const weekend = isWeekend(day);
+          const isSelected = selected === iso;
+          const isToday = iso === toISO.call(null, today.getDate()) && viewMonth === today.getMonth() && viewYear === today.getFullYear();
+
+          return (
+            <button
+              type="button"
+              key={i}
+              disabled={past}
+              onClick={() => onChange(isSelected ? '' : iso)}
+              className={`
+                relative mx-auto flex items-center justify-center w-7 h-7 sm:w-8 sm:h-8 rounded-lg text-xs sm:text-sm font-bold transition-all duration-150
+                ${past ? 'text-gray-700 cursor-not-allowed' : 'cursor-pointer hover:bg-brand-cyan/20 hover:text-white'}
+                ${isSelected ? 'bg-brand-cyan text-black shadow-neon-cyan scale-110' : ''}
+                ${!isSelected && weekend && !past ? 'text-brand-purple/80' : ''}
+                ${!isSelected && !past && !weekend ? 'text-gray-300' : ''}
+              `}
+            >
+              {day}
+              {isToday && !isSelected && (
+                <span className="absolute bottom-0.5 left-1/2 -translate-x-1/2 w-1 h-1 bg-brand-cyan rounded-full" />
+              )}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Selected date display */}
+      <div className={`mt-4 pt-3 border-t border-white/5 text-center transition-all duration-300 ${selected ? 'opacity-100' : 'opacity-40'}`}>
+        {selected ? (
+          <p className="text-xs font-mono text-brand-cyan uppercase tracking-widest">
+            <span className="text-gray-500 mr-2">DATE LOCKED:</span>
+            {new Date(selected + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
+          </p>
+        ) : (
+          <p className="text-[10px] font-mono text-gray-600 uppercase tracking-widest">Select your preferred event date — weekends in purple</p>
+        )}
+      </div>
+    </div>
+  );
+};
+
 const InteractiveClearance = () => {
   const [step, setStep] = useState(0); // 0: Who, 1: Kind, 2: Type, 3: Form, 4: Success
   const [selections, setSelections] = useState({
@@ -484,7 +596,8 @@ const InteractiveClearance = () => {
     email: '',
     phone: '',
     company: '',
-    details: ''
+    details: '',
+    preferredDate: ''
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -549,6 +662,7 @@ const InteractiveClearance = () => {
           eventFrequency: selections.eventFrequency,
           experienceType: selections.experienceType,
           details: selections.details,
+          preferredDate: selections.preferredDate || null,
         }),
       });
     } catch (err) {
@@ -569,7 +683,8 @@ const InteractiveClearance = () => {
       email: '',
       phone: '',
       company: '',
-      details: ''
+      details: '',
+      preferredDate: ''
     });
   };
 
@@ -684,6 +799,16 @@ const InteractiveClearance = () => {
               </p>
 
               <form onSubmit={handleFinalSubmit} className="space-y-4">
+
+                {/* Calendar */}
+                <div>
+                  <p className="text-[10px] font-mono text-gray-500 uppercase tracking-widest mb-2">Preferred Event Date <span className="text-gray-700">(Optional)</span></p>
+                  <BookingCalendar
+                    value={selections.preferredDate}
+                    onChange={date => setSelections({ ...selections, preferredDate: date })}
+                  />
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <input 
                     required
@@ -722,7 +847,7 @@ const InteractiveClearance = () => {
                 </div>
                 <textarea 
                   required
-                  placeholder="EVENT SPECS / DATE / VISION"
+                  placeholder="EVENT SPECS / VISION / NOTES"
                   rows={4}
                   className="w-full bg-black/50 border border-white/5 focus:border-brand-cyan/50 rounded-xl px-4 py-4 text-white placeholder:text-gray-600 text-xs font-black tracking-widest focus:outline-none transition-all resize-none"
                   value={selections.details}
@@ -744,9 +869,18 @@ const InteractiveClearance = () => {
                   <Circle className="w-8 h-8 sm:w-12 sm:h-12 text-brand-cyan fill-current" />
                </div>
                <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-4">SIGNAL SENT.</h2>
-               <p className="text-base sm:text-xl text-gray-400 font-light max-w-md mx-auto mb-8 sm:mb-10 px-2">
+               <p className="text-base sm:text-xl text-gray-400 font-light max-w-md mx-auto mb-6 px-2">
                  Clearance is being processed. Our team will ping you back if you are cleared for the vibe.
                </p>
+               {selections.preferredDate && (
+                 <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl mb-8">
+                   <Calendar className="w-4 h-4 text-brand-cyan" />
+                   <p className="text-xs font-mono text-brand-cyan uppercase tracking-widest">
+                     Date Locked: {new Date(selections.preferredDate + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' })}
+                   </p>
+                 </div>
+               )}
+               <br />
                <button 
                  onClick={startOver}
                  className="px-6 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all text-sm"

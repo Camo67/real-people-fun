@@ -17,6 +17,7 @@ export interface LeadData {
   eventFrequency: string;
   experienceType: string;
   details?: string;
+  preferredDate?: string;
 }
 
 export interface ProspectData {
@@ -54,6 +55,7 @@ Lead details:
 - Event type interest: ${lead.eventFrequency} events
 - Experience they want: ${experienceMap[lead.experienceType] || lead.experienceType}
 - Their message/vision: ${lead.details || 'Not provided'}
+- Preferred event date: ${lead.preferredDate || 'Not specified'}
 
 Write a follow-up email that:
 1. Subject line that grabs attention (include [SUBJECT: ...] at top)

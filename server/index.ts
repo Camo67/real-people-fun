@@ -19,7 +19,7 @@ app.use((req, res, next) => {
 // ── LEADS ────────────────────────────────────────────────────────────────────
 
 app.post('/api/leads', async (req, res) => {
-  const { name, email, phone, company, userType, eventFrequency, experienceType, details } = req.body;
+  const { name, email, phone, company, userType, eventFrequency, experienceType, details, preferredDate } = req.body;
 
   if (!name || !email) {
     return res.status(400).json({ error: 'Name and email are required' });
@@ -27,17 +27,17 @@ app.post('/api/leads', async (req, res) => {
 
   try {
     const result = await pool.query(
-      `INSERT INTO leads (name, email, phone, company, user_type, event_frequency, experience_type, details)
-       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+      `INSERT INTO leads (name, email, phone, company, user_type, event_frequency, experience_type, details, preferred_date)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
        RETURNING id`,
-      [name, email, phone || null, company || null, userType, eventFrequency, experienceType, details || null]
+      [name, email, phone || null, company || null, userType, eventFrequency, experienceType, details || null, preferredDate || null]
     );
 
     const leadId = result.rows[0].id;
 
     let outreachEmail = '';
     try {
-      outreachEmail = await generateLeadOutreachEmail({ name, email, phone, company, userType, eventFrequency, experienceType, details });
+      outreachEmail = await generateLeadOutreachEmail({ name, email, phone, company, userType, eventFrequency, experienceType, details, preferredDate });
       await pool.query(`UPDATE leads SET outreach_email = $1 WHERE id = $2`, [outreachEmail, leadId]);
     } catch (aiErr) {
       console.error('AI email generation failed:', aiErr);

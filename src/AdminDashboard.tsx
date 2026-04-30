@@ -13,6 +13,7 @@ interface Lead {
   experience_type: string;
   details?: string;
   outreach_email?: string;
+  preferred_date?: string;
   created_at: string;
 }
 
@@ -149,6 +150,7 @@ function LeadsTab() {
                     <p><span className="text-gray-500 font-mono uppercase">Type:</span> <span className="text-gray-300">{lead.user_type}</span></p>
                     <p><span className="text-gray-500 font-mono uppercase">Frequency:</span> <span className="text-gray-300">{lead.event_frequency}</span></p>
                     <p><span className="text-gray-500 font-mono uppercase">Experience:</span> <span className="text-gray-300">{lead.experience_type}</span></p>
+                    {lead.preferred_date && <p><span className="text-gray-500 font-mono uppercase">Preferred Date:</span> <span className="text-brand-cyan font-bold">{new Date(lead.preferred_date + 'T00:00:00').toLocaleDateString('en-US', { weekday: 'short', month: 'long', day: 'numeric', year: 'numeric' })}</span></p>}
                     {lead.details && <p><span className="text-gray-500 font-mono uppercase">Details:</span> <span className="text-gray-300">{lead.details}</span></p>}
                   </div>
                   <div>
