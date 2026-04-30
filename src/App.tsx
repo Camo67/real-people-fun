@@ -511,14 +511,30 @@ const InteractiveClearance = () => {
     setStep(prev => prev + 1);
   };
 
-  const handleFinalSubmit = (e: FormEvent) => {
+  const handleFinalSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    // Simulate API call
-    setTimeout(() => {
+    try {
+      await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: selections.name,
+          email: selections.email,
+          phone: selections.phone,
+          company: selections.company,
+          userType: selections.userType,
+          eventFrequency: selections.eventFrequency,
+          experienceType: selections.experienceType,
+          details: selections.details,
+        }),
+      });
+    } catch (err) {
+      console.error('Failed to submit lead:', err);
+    } finally {
       setIsSubmitting(false);
       setStep(4);
-    }, 1500);
+    }
   };
 
   const startOver = () => {
@@ -760,6 +776,7 @@ const Footer = () => (
              <li className="hover:text-brand-purple cursor-pointer transition-colors">Contact</li>
              <li className="hover:text-brand-purple cursor-pointer transition-colors">FAQ</li>
              <li className="hover:text-brand-purple cursor-pointer transition-colors">Safety</li>
+             <li><a href="/admin" className="hover:text-brand-cyan transition-colors">Admin</a></li>
            </ul>
          </div>
          <div className="col-span-2 sm:col-span-1">
