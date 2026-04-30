@@ -25,22 +25,25 @@ import { useRef, useState, FormEvent } from 'react';
 // --- Components ---
 
 const Navbar = () => (
-  <nav className="fixed top-0 left-0 right-0 z-50 px-6 py-4 flex justify-between items-center bg-deep-bg/80 backdrop-blur-md border-b border-white/5">
-    <div className="flex items-center space-x-3">
-      <div className="w-12 h-12 relative group cursor-pointer">
+  <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center bg-deep-bg/80 backdrop-blur-md border-b border-white/5">
+    <div className="flex items-center space-x-2 sm:space-x-3">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 relative group cursor-pointer flex-shrink-0">
         <img 
           src="/logo-irl.jpg" 
           alt="IRL Logo" 
           className="w-full h-full object-contain filter group-hover:drop-shadow-neon-cyan transition-all duration-500"
         />
       </div>
-      <span className="font-display font-medium text-lg tracking-tighter uppercase hidden sm:block">IRL <span className="text-gray-500">Interactive Events</span></span>
+      <span className="font-display font-medium text-sm sm:text-lg tracking-tighter uppercase hidden sm:block">IRL <span className="text-gray-500">Interactive Events</span></span>
     </div>
-    <div className="flex items-center space-x-8 text-[10px] font-bold tracking-[0.2em] uppercase">
-      <a href="#events" className="hover:text-brand-cyan transition-colors">The Shows</a>
-      <a href="#gallery" className="hover:text-brand-cyan transition-colors">The Proof</a>
-      <a href="#reviews" className="hover:text-brand-cyan transition-colors">The Word</a>
-      <button className="bg-brand-cyan px-6 py-2 rounded-full font-black text-black hover:scale-105 transition-transform active:scale-95 shadow-neon-cyan text-[10px]">
+    <div className="flex items-center gap-4 sm:gap-8 text-[10px] font-bold tracking-[0.2em] uppercase">
+      <a href="#events" className="hover:text-brand-cyan transition-colors hidden md:block">The Shows</a>
+      <a href="#gallery" className="hover:text-brand-cyan transition-colors hidden md:block">The Proof</a>
+      <a href="#reviews" className="hover:text-brand-cyan transition-colors hidden md:block">The Word</a>
+      <button
+        onClick={() => document.getElementById('tickets')?.scrollIntoView({ behavior: 'smooth' })}
+        className="bg-brand-cyan px-4 sm:px-6 py-2 rounded-full font-black text-black hover:scale-105 transition-transform active:scale-95 shadow-neon-cyan text-[9px] sm:text-[10px] whitespace-nowrap"
+      >
         Secure the Vibe
       </button>
     </div>
@@ -107,26 +110,26 @@ const Hero = () => {
   };
 
   return (
-    <section ref={containerRef} className="relative h-screen flex flex-col items-center justify-center overflow-hidden pt-20">
+    <section ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 px-4">
       {/* Dynamic Background Reveal */}
       <motion.div 
         initial={{ scale: 0, opacity: 0 }}
         animate={{ scale: 1.5, opacity: 0.15 }}
         transition={{ duration: 3, ease: "easeOut" }}
-        className="absolute w-[800px] h-[800px] bg-brand-cyan/20 blur-[150px] rounded-full pointer-events-none" 
+        className="absolute w-[400px] sm:w-[800px] h-[400px] sm:h-[800px] bg-brand-cyan/20 blur-[150px] rounded-full pointer-events-none" 
       />
       
       <motion.div 
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="text-center z-10 px-4"
+        className="text-center z-10 w-full max-w-5xl"
       >
         <motion.div
           variants={itemVariants}
-          className="inline-block px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-6"
+          className="inline-block px-3 sm:px-4 py-1.5 rounded-full bg-white/5 border border-white/10 mb-4 sm:mb-6"
         >
-          <span className="text-xs font-mono text-brand-cyan tracking-widest uppercase">
+          <span className="text-[10px] sm:text-xs font-mono text-brand-cyan tracking-widest uppercase">
             <motion.span
               animate={{ opacity: [0, 1, 0, 1] }}
               transition={{ repeat: 3, duration: 0.2, delay: 0.5 }}
@@ -139,7 +142,7 @@ const Hero = () => {
         <motion.h1 
           variants={titleVariants}
           style={{ y, opacity }}
-          className="text-6xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter uppercase leading-[0.85] mb-4"
+          className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter uppercase leading-[0.85] mb-4"
         >
           <span className="block text-white">You Had To</span>
           <motion.span 
@@ -160,7 +163,7 @@ const Hero = () => {
 
         <motion.p 
           variants={itemVariants}
-          className="max-w-2xl mx-auto text-lg md:text-xl text-gray-400 font-light tracking-wide mb-12"
+          className="max-w-2xl mx-auto text-base sm:text-lg md:text-xl text-gray-400 font-light tracking-wide mb-8 sm:mb-12 px-2"
         >
           The moments that don't make it to the group chat. High-energy gameshows, 
           unscripted chaos, and real human connection for those who know the difference.
@@ -168,11 +171,11 @@ const Hero = () => {
 
         <motion.div 
           variants={buttonVariants}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4"
         >
           <button 
             onClick={() => document.getElementById('tickets')?.scrollIntoView({ behavior: 'smooth' })}
-            className="w-full sm:w-auto px-10 py-5 bg-brand-cyan text-black font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all shadow-neon-cyan active:scale-95 group relative overflow-hidden"
+            className="w-full sm:w-auto px-8 sm:px-10 py-4 sm:py-5 bg-brand-cyan text-black font-black uppercase tracking-widest rounded-xl hover:scale-105 transition-all shadow-neon-cyan active:scale-95 group relative overflow-hidden text-sm"
           >
             <motion.div 
               animate={{ x: ['-100%', '200%'] }}
@@ -182,7 +185,7 @@ const Hero = () => {
             Secure the Vibe
             <ChevronRight className="inline-block ml-2 group-hover:translate-x-1 transition-transform" />
           </button>
-          <button className="w-full sm:w-auto px-8 py-4 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+          <button className="w-full sm:w-auto px-6 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2 text-sm">
             <Play className="w-4 h-4 fill-current" />
             Watch Showreel
           </button>
@@ -212,11 +215,11 @@ const Hero = () => {
 
 const BentoGrid = () => {
   return (
-    <section className="px-6 py-24 max-w-7xl mx-auto" id="events">
+    <section className="px-4 sm:px-6 py-16 sm:py-24 max-w-7xl mx-auto" id="events">
       <div className="grid grid-cols-1 md:grid-cols-12 grid-rows-auto gap-4">
         
         {/* Featured Card - Main Show */}
-        <div className="md:col-span-8 md:row-span-2 bento-card border-brand-cyan/20 group overflow-hidden relative">
+        <div className="md:col-span-8 md:row-span-2 bento-card border-brand-cyan/20 group overflow-hidden relative min-h-[340px] sm:min-h-[420px]">
           <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-transparent pointer-events-none" />
           <img 
             src="/logo-wedding.png" 
@@ -232,7 +235,7 @@ const BentoGrid = () => {
                 80% of your wedding planned for $6000
               </div>
             </div>
-            <h3 className="text-4xl md:text-5xl font-display font-black uppercase mb-2 tracking-tighter">Wedding-In-A-Box</h3>
+            <h3 className="text-3xl sm:text-4xl md:text-5xl font-display font-black uppercase mb-2 tracking-tighter">Wedding-In-A-Box</h3>
             <p className="text-gray-400 max-w-md">
               The underground alternative to corporate weddings. Immersive games, professional hosting, and the vibe your guests will actually remember.
             </p>
@@ -242,8 +245,8 @@ const BentoGrid = () => {
               <span className="px-3 py-1 bg-white/5 border border-white/10 rounded-full">Unfiltered</span>
             </div>
           </div>
-          <div className="absolute top-0 right-0 p-8">
-            <Trophy className="w-32 h-32 text-brand-cyan/20 group-hover:text-brand-cyan/40 group-hover:scale-110 transition-all duration-700" />
+          <div className="absolute top-0 right-0 p-4 sm:p-8 hidden sm:block">
+            <Trophy className="w-20 h-20 sm:w-32 sm:h-32 text-brand-cyan/20 group-hover:text-brand-cyan/40 group-hover:scale-110 transition-all duration-700" />
           </div>
         </div>
 
@@ -377,12 +380,12 @@ const Gallery = () => {
   ];
 
   return (
-    <section className="px-6 py-24 max-w-7xl mx-auto" id="gallery">
-      <div className="mb-12">
+    <section className="px-4 sm:px-6 py-16 sm:py-24 max-w-7xl mx-auto" id="gallery">
+      <div className="mb-8 sm:mb-12">
         <h2 className="text-xs font-mono text-brand-cyan tracking-[0.3em] uppercase mb-2">Visual Vault</h2>
-        <h3 className="text-5xl font-display font-black uppercase tracking-tighter">Caught in the Act</h3>
+        <h3 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-tighter">Caught in the Act</h3>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
         {images.map((img, i) => (
           <motion.div
             key={i}
@@ -425,12 +428,12 @@ const ReviewSection = () => {
   ];
 
   return (
-    <section className="bg-deep-bg py-24 px-6 border-y border-white/5" id="reviews">
+    <section className="bg-deep-bg py-16 sm:py-24 px-4 sm:px-6 border-y border-white/5" id="reviews">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-12 gap-6">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 sm:mb-12 gap-4 sm:gap-6">
           <div>
             <h2 className="text-xs font-mono text-brand-purple tracking-[0.3em] uppercase mb-2">Social Proof</h2>
-            <h3 className="text-5xl font-display font-black uppercase tracking-tighter">GigSalad Reviews</h3>
+            <h3 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-tighter">GigSalad Reviews</h3>
           </div>
           <a 
             href="https://www.gigsalad.com/irl_interactive_events_westmont" 
@@ -571,7 +574,7 @@ const InteractiveClearance = () => {
   };
 
   return (
-    <section className="py-24 px-6 relative min-h-[800px] flex flex-col items-center justify-center bg-deep-bg" id="tickets">
+    <section className="py-16 sm:py-24 px-4 sm:px-6 relative min-h-[800px] flex flex-col items-center justify-center bg-deep-bg" id="tickets">
       {/* Background Decor */}
       <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/dark-brick-wall.png')] opacity-10 pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-t from-black via-transparent to-black pointer-events-none" />
@@ -580,23 +583,23 @@ const InteractiveClearance = () => {
         
         {/* Header Navigation */}
         {step < 4 && (
-          <div className="flex justify-between items-center mb-16 px-4">
+          <div className="flex justify-between items-center mb-8 sm:mb-16 px-0 sm:px-4">
             <button 
               onClick={() => setStep(prev => Math.max(0, prev - 1))}
               disabled={step === 0}
-              className={`px-6 py-2 border-2 border-brand-cyan text-brand-cyan font-black uppercase tracking-widest rounded-sm skew-x-[-10deg] hover:bg-brand-cyan hover:text-black transition-all disabled:opacity-0`}
+              className={`px-3 sm:px-6 py-2 border-2 border-brand-cyan text-brand-cyan font-black uppercase tracking-wider sm:tracking-widest rounded-sm skew-x-[-10deg] hover:bg-brand-cyan hover:text-black transition-all disabled:opacity-0 text-[10px] sm:text-xs`}
             >
               <span className="skew-x-[10deg] block">BACK</span>
             </button>
             <div className="flex flex-col items-center">
-               <div className="w-12 h-12 bg-white/5 rounded-lg border border-brand-cyan/20 flex items-center justify-center mb-2">
-                 <img src="/logo-irl.jpg" alt="Logo" className="w-8 h-8 object-contain" />
+               <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/5 rounded-lg border border-brand-cyan/20 flex items-center justify-center mb-1 sm:mb-2">
+                 <img src="/logo-irl.jpg" alt="Logo" className="w-7 h-7 sm:w-8 sm:h-8 object-contain" />
                </div>
-               <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Clearance Protocol</span>
+               <span className="text-[9px] sm:text-[10px] font-mono text-gray-500 uppercase tracking-widest">Clearance Protocol</span>
             </div>
             <button 
               onClick={startOver}
-              className="px-6 py-2 border-2 border-brand-purple text-brand-purple font-black uppercase tracking-widest rounded-sm skew-x-[10deg] hover:bg-brand-purple hover:text-black transition-all"
+              className="px-3 sm:px-6 py-2 border-2 border-brand-purple text-brand-purple font-black uppercase tracking-wider sm:tracking-widest rounded-sm skew-x-[10deg] hover:bg-brand-purple hover:text-black transition-all text-[10px] sm:text-xs"
             >
               <span className="skew-x-[-10deg] block">START OVER</span>
             </button>
@@ -612,14 +615,14 @@ const InteractiveClearance = () => {
         >
           {step < 3 ? (
             <>
-              <h2 className="text-5xl md:text-8xl font-display font-black text-white tracking-tighter uppercase mb-2 leading-none">
+              <h2 className="text-3xl sm:text-5xl md:text-8xl font-display font-black text-white tracking-tighter uppercase mb-2 leading-none">
                 {steps[step].title}
               </h2>
-              <p className="text-xs md:text-sm font-mono text-brand-cyan tracking-[0.2em] uppercase mb-16 opacity-80">
+              <p className="text-[10px] sm:text-xs md:text-sm font-mono text-brand-cyan tracking-[0.15em] sm:tracking-[0.2em] uppercase mb-8 sm:mb-16 opacity-80 px-2">
                 {steps[step].subtitle}
               </p>
 
-              <div className={`grid grid-cols-1 sm:grid-cols-2 ${steps[step].id === 'type' ? 'lg:grid-cols-5' : 'lg:grid-cols-4'} gap-4 px-4`}>
+              <div className={`grid grid-cols-2 ${steps[step].id === 'type' ? 'sm:grid-cols-3 lg:grid-cols-5' : 'sm:grid-cols-2 lg:grid-cols-4'} gap-3 sm:gap-4`}>
                 {steps[step].id === 'type' ? (
                   // Custom rendering for Step 3 (The brands with images)
                   steps[step].options.map((opt, i: number) => (
@@ -653,30 +656,30 @@ const InteractiveClearance = () => {
                     <button
                       key={i}
                       onClick={() => handleSelect(step === 0 ? 'userType' : 'eventFrequency', opt.value)}
-                      className="bento-card bg-white/5 border border-white/10 hover:border-brand-cyan p-10 flex flex-col items-center justify-center gap-6 group cursor-pointer transition-all hover:bg-brand-cyan/10"
+                      className="bento-card bg-white/5 border border-white/10 hover:border-brand-cyan p-5 sm:p-10 flex flex-col items-center justify-center gap-3 sm:gap-6 group cursor-pointer transition-all hover:bg-brand-cyan/10"
                     >
-                      <div className="text-brand-cyan group-hover:scale-125 transition-transform duration-500">
+                      <div className="text-brand-cyan group-hover:scale-125 transition-transform duration-500 [&>svg]:w-6 [&>svg]:h-6 sm:[&>svg]:w-8 sm:[&>svg]:h-8">
                         {opt.icon}
                       </div>
-                      <span className="text-xl font-display font-black text-white uppercase tracking-tighter group-hover:text-brand-cyan">{opt.label}</span>
-                      <div className="w-8 h-[2px] bg-white/10 group-hover:bg-brand-cyan transition-all" />
+                      <span className="text-sm sm:text-xl font-display font-black text-white uppercase tracking-tighter group-hover:text-brand-cyan">{opt.label}</span>
+                      <div className="w-6 sm:w-8 h-[2px] bg-white/10 group-hover:bg-brand-cyan transition-all" />
                     </button>
                   ))
                 )}
               </div>
 
-              <div className="mt-20 max-w-2xl mx-auto px-6 py-4 bg-brand-cyan/5 border border-brand-cyan/10 rounded-xl">
+              <div className="mt-8 sm:mt-20 max-w-2xl mx-auto px-4 sm:px-6 py-4 bg-brand-cyan/5 border border-brand-cyan/10 rounded-xl">
                  <p className="text-[10px] md:text-xs font-mono text-gray-400 uppercase leading-relaxed tracking-wide">
                    {steps[step].tip}
                  </p>
               </div>
             </>
           ) : step === 3 ? (
-            <div className="max-w-xl mx-auto">
-              <h2 className="text-4xl md:text-6xl font-display font-black text-white tracking-tighter uppercase mb-4 leading-none">
+            <div className="max-w-xl mx-auto text-left">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-display font-black text-white tracking-tighter uppercase mb-3 leading-none text-center">
                 TRANSMIT DETAILS
               </h2>
-              <p className="text-xs font-mono text-brand-purple tracking-[0.2em] uppercase mb-12 italic">
+              <p className="text-[10px] sm:text-xs font-mono text-brand-purple tracking-[0.2em] uppercase mb-8 sm:mb-12 italic text-center">
                 Final step for Clearance Verification
               </p>
 
@@ -736,17 +739,17 @@ const InteractiveClearance = () => {
               </form>
             </div>
           ) : (
-            <div className="text-center py-20">
-               <div className="w-24 h-24 bg-brand-cyan/20 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
-                  <Circle className="w-12 h-12 text-brand-cyan fill-current" />
+            <div className="text-center py-12 sm:py-20 px-4">
+               <div className="w-16 h-16 sm:w-24 sm:h-24 bg-brand-cyan/20 rounded-full flex items-center justify-center mx-auto mb-6 sm:mb-8 animate-pulse">
+                  <Circle className="w-8 h-8 sm:w-12 sm:h-12 text-brand-cyan fill-current" />
                </div>
-               <h2 className="text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-4">SIGNAL SENT.</h2>
-               <p className="text-xl text-gray-400 font-light max-w-md mx-auto mb-10">
+               <h2 className="text-4xl sm:text-5xl md:text-7xl font-display font-black text-white uppercase tracking-tighter mb-4">SIGNAL SENT.</h2>
+               <p className="text-base sm:text-xl text-gray-400 font-light max-w-md mx-auto mb-8 sm:mb-10 px-2">
                  Clearance is being processed. Our team will ping you back if you are cleared for the vibe.
                </p>
                <button 
                  onClick={startOver}
-                 className="px-8 py-4 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all"
+                 className="px-6 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/10 text-white font-bold uppercase tracking-widest rounded-xl hover:bg-white/10 transition-all text-sm"
                >
                  Start New Event
                </button>
@@ -755,8 +758,8 @@ const InteractiveClearance = () => {
         </motion.div>
 
         {/* Decorative Grid overlay footer */}
-        <div className="mt-24 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
-        <div className="mt-4 flex justify-center gap-12 text-[10px] font-mono text-gray-600 uppercase tracking-widest italic">
+        <div className="mt-12 sm:mt-24 w-full h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent" />
+        <div className="mt-4 flex justify-center gap-6 sm:gap-12 text-[10px] font-mono text-gray-600 uppercase tracking-widest italic">
            <span>Lat: 41.8344° N</span>
            <span>Long: 87.9723° W</span>
            <span>Status: Ready</span>
@@ -768,8 +771,8 @@ const InteractiveClearance = () => {
 
 
 const Footer = () => (
-  <footer className="px-6 py-20 border-t border-white/5 bg-black">
-     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-12">
+  <footer className="px-4 sm:px-6 py-12 sm:py-20 border-t border-white/5 bg-black">
+     <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-8 sm:gap-12">
        <div>
          <div className="flex items-center gap-2 mb-6">
             <div className="w-8 h-8 bg-brand-cyan rounded-lg flex items-center justify-center font-bold text-black italic">IRL</div>
@@ -828,15 +831,15 @@ export default function App() {
         
         <BentoGrid />
         
-        <section className="py-24 px-6 text-center max-w-4xl mx-auto">
+        <section className="py-16 sm:py-24 px-4 sm:px-6 text-center max-w-4xl mx-auto">
           <motion.h2 
             initial={{ opacity: 0, scale: 0.9 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            className="text-4xl md:text-6xl font-display font-black uppercase tracking-tighter mb-8 bg-gradient-to-r from-brand-cyan via-white to-brand-purple bg-clip-text text-transparent"
+            className="text-3xl sm:text-4xl md:text-6xl font-display font-black uppercase tracking-tighter mb-6 sm:mb-8 bg-gradient-to-r from-brand-cyan via-white to-brand-purple bg-clip-text text-transparent"
           >
             Real people. <br/> Unreal energy.
           </motion.h2>
-          <p className="text-lg text-gray-400 font-light leading-relaxed">
+          <p className="text-base sm:text-lg text-gray-400 font-light leading-relaxed">
             We're the reason you finally put your phone down. Our floor is for the bold, the curious, and anyone tired of the same old night. 
             We build the bridge between the digital buzz and the person standing right in front of you. 
             No scripts, no fillers—just the electricity of being in the right room at the right time.
