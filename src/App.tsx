@@ -29,7 +29,7 @@ const Navbar = () => (
     <div className="flex items-center space-x-3">
       <div className="w-12 h-12 relative group cursor-pointer">
         <img 
-          src="https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_0.png" 
+          src="/logo-irl.jpg" 
           alt="IRL Logo" 
           className="w-full h-full object-contain filter group-hover:drop-shadow-neon-cyan transition-all duration-500"
         />
@@ -219,7 +219,7 @@ const BentoGrid = () => {
         <div className="md:col-span-8 md:row-span-2 bento-card border-brand-cyan/20 group overflow-hidden relative">
           <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-transparent pointer-events-none" />
           <img 
-            src="https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_2.png" 
+            src="/logo-wedding.png" 
             alt="Wedding Outside the Box" 
             className="absolute inset-0 w-full h-full object-cover opacity-20 filter grayscale hover:opacity-40 transition-opacity duration-700"
           />
@@ -323,6 +323,25 @@ const BentoGrid = () => {
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-brand-cyan rounded-full animate-ping" />
           </div>
           <span className="text-[10px] font-mono uppercase tracking-widest text-brand-cyan">Live DJ Sets Included</span>
+        </div>
+
+        {/* Package Cards Row */}
+        <div className="md:col-span-6 bento-card border-brand-cyan/20 group overflow-hidden relative p-0 min-h-[260px]">
+          <img src="/logo-b2b.png" alt="B2B Speed Dating" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+            <span className="text-[10px] font-mono text-brand-cyan uppercase tracking-widest mb-1">New Package</span>
+            <h4 className="text-2xl font-display font-black uppercase tracking-tighter">B2B Speed Dating</h4>
+            <p className="text-xs text-gray-400 mt-1">Fast-paced structured networking that actually works for business.</p>
+          </div>
+        </div>
+
+        <div className="md:col-span-6 bento-card border-brand-purple/20 group overflow-hidden relative p-0 min-h-[260px]">
+          <img src="/logo-eventfunnels.png" alt="Event Funnels Workshop" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
+            <span className="text-[10px] font-mono text-brand-purple uppercase tracking-widest mb-1">New Package</span>
+            <h4 className="text-2xl font-display font-black uppercase tracking-tighter">Event Funnels Workshop</h4>
+            <p className="text-xs text-gray-400 mt-1">Learn the system that turns one event into a client acquisition machine.</p>
+          </div>
         </div>
 
         {/* Stats Card */}
@@ -496,11 +515,11 @@ const InteractiveClearance = () => {
       title: 'WHAT TYPE OF EVENT?',
       subtitle: 'JACKPOTS | PRIZES • BIGGER AUDIENCES • THEMES | TICKETED',
       options: [
-        { label: 'GSNL', sub: 'GAME SHOW NIGHT LIVE', value: 'gsnl', img: 'https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_6.png' },
-        { label: 'HYBRID', sub: 'EVENTS & STREAMS', value: 'hybrid', img: 'https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_1.png' },
-        { label: 'BADA BRUNCH', sub: 'THEMED EVENTS', value: 'bada', img: 'https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_4.png' },
-        { label: 'WATER COOLER', sub: 'CORPORATE SPORTS', value: 'sports', img: 'https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_5.png' },
-        { label: 'WEDDING', sub: 'IN-A-BOX', value: 'wedding', img: 'https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_2.png', sticker: '80% LOADED' },
+        { label: 'GSNL', sub: 'GAME SHOW NIGHT LIVE', value: 'gsnl', img: '/logo-gsnl.jpg' },
+        { label: 'HYBRID', sub: 'EVENTS & STREAMS', value: 'hybrid', img: '/logo-hybrid.png' },
+        { label: 'BADA BRUNCH', sub: 'THEMED EVENTS', value: 'bada', img: '/logo-bada.jpg' },
+        { label: 'WATER COOLER', sub: 'CORPORATE SPORTS', value: 'sports', img: '/logo-watercooler.png' },
+        { label: 'WEDDING', sub: 'IN-A-BOX', value: 'wedding', img: '/logo-wedding.png', sticker: '80% LOADED' },
       ],
       tip: 'TIP: Select your preferred experience brand. Each offers a unique protocol for audience engagement and atmosphere control.'
     }
@@ -571,7 +590,7 @@ const InteractiveClearance = () => {
             </button>
             <div className="flex flex-col items-center">
                <div className="w-12 h-12 bg-white/5 rounded-lg border border-brand-cyan/20 flex items-center justify-center mb-2">
-                 <img src="https://ais-pre-bksdbbo5vpt7t4aw2o3vbm-490606231621.europe-west2.run.app/input_file_0.png" alt="Logo" className="w-8 h-8 object-contain" />
+                 <img src="/logo-irl.jpg" alt="Logo" className="w-8 h-8 object-contain" />
                </div>
                <span className="text-[10px] font-mono text-gray-500 uppercase tracking-widest">Clearance Protocol</span>
             </div>
