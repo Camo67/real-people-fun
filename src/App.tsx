@@ -216,10 +216,10 @@ const Hero = () => {
 const BentoGrid = () => {
   return (
     <section className="px-4 sm:px-6 py-16 sm:py-24 max-w-7xl mx-auto" id="events">
-      <div className="grid grid-cols-1 md:grid-cols-12 grid-rows-auto gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-12 grid-rows-auto gap-3 sm:gap-4">
         
         {/* Featured Card - Main Show */}
-        <div className="md:col-span-8 md:row-span-2 bento-card border-brand-cyan/20 group overflow-hidden relative min-h-[340px] sm:min-h-[420px]">
+        <div className="col-span-2 md:col-span-8 md:row-span-2 bento-card border-brand-cyan/20 group overflow-hidden relative min-h-[280px] sm:min-h-[340px] md:min-h-[420px]">
           <div className="absolute inset-0 bg-gradient-to-br from-brand-cyan/10 to-transparent pointer-events-none" />
           <img 
             src="/logo-wedding.png" 
@@ -251,17 +251,17 @@ const BentoGrid = () => {
         </div>
 
         {/* Small Card - Location */}
-        <div className="md:col-span-4 bento-card border-brand-purple/20 group cursor-pointer hover:bg-brand-purple/5">
-          <MapPin className="text-brand-purple mb-4 group-hover:animate-bounce" />
-          <h4 className="text-xl font-bold uppercase mb-1">Sited in Westmont</h4>
-          <p className="text-sm text-gray-500">Operating out of IL. Available anywhere that needs a pulse.</p>
+        <div className="col-span-1 md:col-span-4 bento-card border-brand-purple/20 group cursor-pointer hover:bg-brand-purple/5">
+          <MapPin className="text-brand-purple mb-3 md:mb-4 w-5 h-5 md:w-6 md:h-6 group-hover:animate-bounce" />
+          <h4 className="text-sm md:text-xl font-bold uppercase mb-1">Sited in Westmont</h4>
+          <p className="text-xs md:text-sm text-gray-500 hidden sm:block">Operating out of IL. Available anywhere that needs a pulse.</p>
         </div>
 
         {/* Small Card - Crowd */}
-        <div className="md:col-span-4 bento-card border-brand-cyan/20 group">
-          <Users className="text-brand-cyan mb-4 group-hover:scale-110 transition-transform" />
-          <h4 className="text-xl font-bold uppercase mb-1">The Inner Circle</h4>
-          <p className="text-sm text-gray-500">Every guest is part of the show. No one is safe from the fun.</p>
+        <div className="col-span-1 md:col-span-4 bento-card border-brand-cyan/20 group">
+          <Users className="text-brand-cyan mb-3 md:mb-4 w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
+          <h4 className="text-sm md:text-xl font-bold uppercase mb-1">The Inner Circle</h4>
+          <p className="text-xs md:text-sm text-gray-500 hidden sm:block">Every guest is part of the show. No one is safe from the fun.</p>
         </div>
 
         {/* Medium Card - Reviews Preview */}
@@ -269,7 +269,7 @@ const BentoGrid = () => {
           href="https://www.gigsalad.com/irl_events-interactive_entertainment_chicago"
           target="_blank"
           rel="noopener noreferrer"
-          className="md:col-span-4 md:row-span-2 bento-card bg-gradient-to-b from-dark-card to-brand-purple/10 flex flex-col justify-between group hover:scale-[1.02] transition-all cursor-pointer border-brand-purple/30 md:h-[422px]"
+          className="col-span-2 md:col-span-4 md:row-span-2 bento-card bg-gradient-to-b from-dark-card to-brand-purple/10 flex flex-col justify-between group hover:scale-[1.02] transition-all cursor-pointer border-brand-purple/30 md:h-[422px]"
         >
           <div>
             <div className="flex justify-between items-start mb-6">
@@ -295,7 +295,7 @@ const BentoGrid = () => {
         </a>
 
         {/* Medium Card - Services */}
-        <div className="md:col-span-4 bento-card border-brand-cyan/20 overflow-hidden relative md:h-[422px]">
+        <div className="col-span-2 md:col-span-4 bento-card border-brand-cyan/20 overflow-hidden relative md:h-[422px]">
           <div className="absolute top-0 right-0 p-4 opacity-5 rotate-12">
             <ShieldCheck className="w-24 h-24" />
           </div>
@@ -320,7 +320,7 @@ const BentoGrid = () => {
         </div>
 
         {/* Small Card - Music */}
-        <div className="md:col-span-4 bento-card border-white/10 text-center flex flex-col items-center justify-center group hover:border-brand-cyan/40">
+        <div className="col-span-2 md:col-span-4 bento-card border-white/10 text-center flex flex-col items-center justify-center group hover:border-brand-cyan/40 py-8 md:py-6">
           <div className="relative">
             <Music className="w-8 h-8 text-white mb-2 group-hover:rotate-12 transition-transform" />
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-brand-cyan rounded-full animate-ping" />
@@ -329,39 +329,39 @@ const BentoGrid = () => {
         </div>
 
         {/* Package Cards Row */}
-        <div className="md:col-span-6 bento-card border-brand-cyan/20 group overflow-hidden relative p-0 min-h-[260px]">
+        <div className="col-span-1 sm:col-span-1 md:col-span-6 bento-card border-brand-cyan/20 group overflow-hidden relative p-0 min-h-[200px] sm:min-h-[260px]">
           <img src="/logo-b2b.png" alt="B2B Speed Dating" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
-            <span className="text-[10px] font-mono text-brand-cyan uppercase tracking-widest mb-1">New Package</span>
-            <h4 className="text-2xl font-display font-black uppercase tracking-tighter">B2B Speed Dating</h4>
-            <p className="text-xs text-gray-400 mt-1">Fast-paced structured networking that actually works for business.</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
+            <span className="text-[9px] sm:text-[10px] font-mono text-brand-cyan uppercase tracking-widest mb-1">New Package</span>
+            <h4 className="text-lg sm:text-2xl font-display font-black uppercase tracking-tighter">B2B Speed Dating</h4>
+            <p className="text-[10px] sm:text-xs text-gray-400 mt-1 hidden sm:block">Fast-paced structured networking that actually works for business.</p>
           </div>
         </div>
 
-        <div className="md:col-span-6 bento-card border-brand-purple/20 group overflow-hidden relative p-0 min-h-[260px]">
+        <div className="col-span-1 sm:col-span-1 md:col-span-6 bento-card border-brand-purple/20 group overflow-hidden relative p-0 min-h-[200px] sm:min-h-[260px]">
           <img src="/logo-eventfunnels.png" alt="Event Funnels Workshop" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-6">
-            <span className="text-[10px] font-mono text-brand-purple uppercase tracking-widest mb-1">New Package</span>
-            <h4 className="text-2xl font-display font-black uppercase tracking-tighter">Event Funnels Workshop</h4>
-            <p className="text-xs text-gray-400 mt-1">Learn the system that turns one event into a client acquisition machine.</p>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
+            <span className="text-[9px] sm:text-[10px] font-mono text-brand-purple uppercase tracking-widest mb-1">New Package</span>
+            <h4 className="text-lg sm:text-2xl font-display font-black uppercase tracking-tighter">Event Funnels Workshop</h4>
+            <p className="text-[10px] sm:text-xs text-gray-400 mt-1 hidden sm:block">Learn the system that turns one event into a client acquisition machine.</p>
           </div>
         </div>
 
         {/* Stats Card */}
-        <div className="md:col-span-12 bento-card border-white/5 py-12 flex flex-col md:flex-row items-center justify-around gap-8 text-center">
+        <div className="col-span-2 md:col-span-12 bento-card border-white/5 py-8 sm:py-12 flex flex-row items-center justify-around gap-2 sm:gap-8 text-center">
           <div>
-            <p className="text-5xl font-display font-black text-white">500+</p>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-brand-cyan mt-1">Events Hosted</p>
+            <p className="text-3xl sm:text-5xl font-display font-black text-white">500+</p>
+            <p className="text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-brand-cyan mt-1">Events Hosted</p>
           </div>
-          <div className="w-px h-12 bg-white/10 hidden md:block" />
+          <div className="w-px h-8 sm:h-12 bg-white/10" />
           <div>
-            <p className="text-5xl font-display font-black text-white">100k</p>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-brand-purple mt-1">Happy Guests</p>
+            <p className="text-3xl sm:text-5xl font-display font-black text-white">100k</p>
+            <p className="text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-brand-purple mt-1">Happy Guests</p>
           </div>
-          <div className="w-px h-12 bg-white/10 hidden md:block" />
+          <div className="w-px h-8 sm:h-12 bg-white/10" />
           <div>
-            <p className="text-5xl font-display font-black text-white">99%</p>
-            <p className="text-[10px] font-mono uppercase tracking-[0.3em] text-brand-cyan mt-1">Re-booking Rate</p>
+            <p className="text-3xl sm:text-5xl font-display font-black text-white">99%</p>
+            <p className="text-[8px] sm:text-[10px] font-mono uppercase tracking-[0.2em] sm:tracking-[0.3em] text-brand-cyan mt-1">Re-booking Rate</p>
           </div>
         </div>
 
@@ -372,11 +372,11 @@ const BentoGrid = () => {
 
 const Gallery = () => {
   const images = [
-    { src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800", alt: "Crowd Energy", size: "md:col-span-4" },
-    { src: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800", alt: "DJ Performance", size: "md:col-span-8" },
-    { src: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=800", alt: "Gameshow Action", size: "md:col-span-6" },
-    { src: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=800", alt: "Nightlife Vibes", size: "md:col-span-6" },
-    { src: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800", alt: "Club Atmos", size: "md:col-span-12" }
+    { src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800", alt: "Crowd Energy", size: "col-span-1 md:col-span-4" },
+    { src: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800", alt: "DJ Performance", size: "col-span-1 md:col-span-8" },
+    { src: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=800", alt: "Gameshow Action", size: "col-span-1 md:col-span-6" },
+    { src: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=800", alt: "Nightlife Vibes", size: "col-span-1 md:col-span-6" },
+    { src: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800", alt: "Club Atmos", size: "col-span-2 md:col-span-12" }
   ];
 
   return (
@@ -385,7 +385,7 @@ const Gallery = () => {
         <h2 className="text-xs font-mono text-brand-cyan tracking-[0.3em] uppercase mb-2">Visual Vault</h2>
         <h3 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-tighter">Caught in the Act</h3>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 sm:gap-6">
+      <div className="grid grid-cols-2 md:grid-cols-12 gap-3 sm:gap-4 md:gap-6">
         {images.map((img, i) => (
           <motion.div
             key={i}
@@ -395,7 +395,7 @@ const Gallery = () => {
             transition={{ delay: i * 0.1 }}
             className={`${img.size} relative group`}
           >
-            <div className="p-4 bg-white rounded-sm shadow-xl transform group-hover:rotate-1 group-hover:scale-[1.02] transition-all duration-500 overflow-hidden">
+            <div className="p-2 sm:p-4 bg-white rounded-sm shadow-xl transform group-hover:rotate-1 group-hover:scale-[1.02] transition-all duration-500 overflow-hidden">
               <div className="relative aspect-[4/3] overflow-hidden bg-gray-200">
                 <img 
                   src={img.src} 
@@ -404,9 +404,9 @@ const Gallery = () => {
                 />
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
               </div>
-              <div className="pt-4 pb-2 px-1">
-                <p className="font-mono text-[10px] text-gray-400 uppercase tracking-widest mb-1 italic">#{String(i + 1).padStart(3, '0')}</p>
-                <p className="font-display font-bold text-black uppercase text-xs tracking-tight">{img.alt}</p>
+              <div className="pt-2 sm:pt-4 pb-1 sm:pb-2 px-1">
+                <p className="font-mono text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-0.5 italic">#{String(i + 1).padStart(3, '0')}</p>
+                <p className="font-display font-bold text-black uppercase text-[9px] sm:text-xs tracking-tight truncate">{img.alt}</p>
               </div>
               {/* Retro Polish Effect Overlay */}
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/20 to-transparent mix-blend-overlay" />
