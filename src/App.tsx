@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import { motion, useScroll, useTransform } from 'motion/react';
+import { motion } from 'motion/react';
 import { 
   Ticket, 
   Star, 
@@ -17,18 +17,66 @@ import {
   ChevronRight,
   ChevronLeft,
   ExternalLink,
+  Mail,
+  MessageCircle,
+  Send,
   X, 
   Circle,
   Play
 } from 'lucide-react';
-import { useRef, useState, FormEvent } from 'react';
+import { useEffect, useState, FormEvent } from 'react';
 
 // --- Components ---
+
+const siteUrl = 'https://www.irlevents.fun';
+const contactEmail = 'info@irlevents.fun';
+const contactSubject = encodeURIComponent('IRL Events Inquiry');
+const contactBody = encodeURIComponent(`Hi IRL Events, I want to talk about booking an interactive event. I found you at ${siteUrl}.`);
+const whatsappUrl = `https://wa.me/?text=${contactBody}`;
+const telegramUrl = `https://t.me/share/url?url=${encodeURIComponent(siteUrl)}&text=${contactBody}`;
+const emailUrl = `mailto:${contactEmail}?subject=${contactSubject}&body=${contactBody}`;
+
+const ContactButtons = ({ compact = false }: { compact?: boolean }) => (
+  <div className={`flex flex-col sm:flex-row gap-3 ${compact ? 'sm:gap-2' : 'sm:gap-3'}`}>
+    <a
+      href={whatsappUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${compact ? 'px-4 py-2 text-[10px]' : 'px-5 py-3 text-xs'} inline-flex items-center justify-center gap-2 rounded-xl border border-emerald-400/30 bg-emerald-400/10 font-black uppercase tracking-widest text-emerald-300 hover:bg-emerald-400 hover:text-black transition-all`}
+    >
+      <MessageCircle className="w-4 h-4" />
+      WhatsApp
+    </a>
+    <a
+      href={telegramUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${compact ? 'px-4 py-2 text-[10px]' : 'px-5 py-3 text-xs'} inline-flex items-center justify-center gap-2 rounded-xl border border-sky-400/30 bg-sky-400/10 font-black uppercase tracking-widest text-sky-300 hover:bg-sky-400 hover:text-black transition-all`}
+    >
+      <Send className="w-4 h-4" />
+      Telegram
+    </a>
+    <a
+      href={emailUrl}
+      className={`${compact ? 'px-4 py-2 text-[10px]' : 'px-5 py-3 text-xs'} inline-flex items-center justify-center gap-2 rounded-xl border border-brand-cyan/30 bg-brand-cyan/10 font-black uppercase tracking-widest text-brand-cyan hover:bg-brand-cyan hover:text-black transition-all`}
+    >
+      <Mail className="w-4 h-4" />
+      Email
+    </a>
+  </div>
+);
+
+const ScanlineOverlay = () => <div className="scanline-overlay" />;
+const CyberGridGlobal = () => (
+  <div className="cyber-grid-global">
+    <div className="absolute inset-0 bg-gradient-to-b from-deep-bg via-transparent to-deep-bg opacity-80" />
+  </div>
+);
 
 const Navbar = () => (
   <nav className="fixed top-0 left-0 right-0 z-50 px-4 sm:px-6 py-3 sm:py-4 flex justify-between items-center bg-deep-bg/80 backdrop-blur-md border-b border-white/5">
     <div className="flex items-center space-x-2 sm:space-x-3">
-      <div className="w-10 h-10 sm:w-12 sm:h-12 relative group cursor-pointer flex-shrink-0">
+      <div className="w-10 h-10 sm:w-12 sm:h-12 relative group cursor-pointer flex-shrink-0 glitch-entry">
         <img 
           src="/logo-irl.jpg" 
           alt="IRL Logo" 
@@ -52,15 +100,6 @@ const Navbar = () => (
 );
 
 const Hero = () => {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end start"]
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
-
   // Animation variants for orchestration
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -111,7 +150,11 @@ const Hero = () => {
   };
 
   return (
-    <section ref={containerRef} className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 px-4">
+    <section 
+      className="relative min-h-screen md:min-h-[88vh] flex flex-col items-center justify-center overflow-hidden pt-16 sm:pt-20 pb-8 px-4"
+      style={{ perspective: '1200px', transformStyle: 'preserve-3d' }}
+    >
+      
       {/* Dynamic Background Reveal */}
       <motion.div 
         initial={{ scale: 0, opacity: 0 }}
@@ -119,6 +162,21 @@ const Hero = () => {
         transition={{ duration: 3, ease: "easeOut" }}
         className="absolute w-[400px] sm:w-[800px] h-[400px] sm:h-[800px] bg-brand-cyan/20 blur-[150px] rounded-full pointer-events-none" 
       />
+
+      <div className="absolute top-20 left-10 hidden lg:block opacity-20">
+         <div className="flex flex-col gap-1 font-mono text-[10px] text-brand-cyan">
+           <span>DECRYPTING SECTOR 7G...</span>
+           <span>LAT: 41.8344° N</span>
+           <span>LONG: 87.9723° W</span>
+           <div className="w-20 h-1 bg-brand-cyan/30 mt-2 relative overflow-hidden">
+             <motion.div 
+               animate={{ x: ['-100%', '100%'] }}
+               transition={{ repeat: Infinity, duration: 1.5, ease: "linear" }}
+               className="absolute inset-0 bg-brand-cyan"
+             />
+           </div>
+         </div>
+      </div>
       
       <motion.div 
         variants={containerVariants}
@@ -142,8 +200,7 @@ const Hero = () => {
         
         <motion.h1 
           variants={titleVariants}
-          style={{ y, opacity }}
-          className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter uppercase leading-[0.85] mb-4"
+          className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-display font-black tracking-tighter uppercase leading-[0.85] mb-4 glitch-entry"
         >
           <span className="block text-white">You Had To</span>
           <motion.span 
@@ -156,7 +213,7 @@ const Hero = () => {
               duration: 4,
               delay: 3
             }}
-            className="block italic text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple"
+            className="block italic text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple flicker"
           >
             Be There.
           </motion.span>
@@ -197,7 +254,7 @@ const Hero = () => {
         initial={{ opacity: 0, scaleY: 0 }}
         animate={{ opacity: 0.5, scaleY: 1 }}
         transition={{ delay: 2.8, duration: 0.5 }}
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 origin-bottom"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 hidden sm:flex flex-col items-center gap-2 origin-bottom"
       >
         <span className="text-[10px] font-mono uppercase tracking-[0.3em]">Scroll to Enter</span>
         <div className="w-[1px] h-12 bg-gradient-to-b from-brand-cyan to-transparent animate-pulse" />
@@ -249,6 +306,15 @@ const BentoGrid = () => {
           <div className="absolute top-0 right-0 p-4 sm:p-8 hidden sm:block">
             <Trophy className="w-20 h-20 sm:w-32 sm:h-32 text-brand-cyan/20 group-hover:text-brand-cyan/40 group-hover:scale-110 transition-all duration-700" />
           </div>
+          
+          {/* Tech Accents */}
+          <div className="absolute top-2 left-2 flex gap-1">
+            <div className="w-1 h-1 bg-brand-cyan animate-pulse" />
+            <div className="w-4 h-px bg-brand-cyan/30 mt-[2px]" />
+          </div>
+          <div className="absolute bottom-4 right-4 font-mono text-[8px] text-brand-cyan/30 tracking-widest">
+            SECTOR_ALPHA_01
+          </div>
         </div>
 
         {/* Small Card - Location */}
@@ -256,6 +322,8 @@ const BentoGrid = () => {
           <MapPin className="text-brand-purple mb-3 md:mb-4 w-5 h-5 md:w-6 md:h-6 group-hover:animate-bounce" />
           <h4 className="text-sm md:text-xl font-bold uppercase mb-1">Sited in Westmont</h4>
           <p className="text-xs md:text-sm text-gray-500 hidden sm:block">Operating out of IL. Available anywhere that needs a pulse.</p>
+          <div className="absolute bottom-2 left-2 w-1 h-1 bg-brand-purple/40" />
+          <div className="absolute top-2 right-2 font-mono text-[7px] text-brand-purple/40">LOC_SCAN_ACTIVE</div>
         </div>
 
         {/* Small Card - Crowd */}
@@ -263,6 +331,7 @@ const BentoGrid = () => {
           <Users className="text-brand-cyan mb-3 md:mb-4 w-5 h-5 md:w-6 md:h-6 group-hover:scale-110 transition-transform" />
           <h4 className="text-sm md:text-xl font-bold uppercase mb-1">The Inner Circle</h4>
           <p className="text-xs md:text-sm text-gray-500 hidden sm:block">Every guest is part of the show. No one is safe from the fun.</p>
+          <div className="absolute top-0 right-0 w-8 h-8 border-t border-r border-brand-cyan/10" />
         </div>
 
         {/* Medium Card - Reviews Preview */}
@@ -330,21 +399,23 @@ const BentoGrid = () => {
         </div>
 
         {/* Package Cards Row */}
-        <div className="col-span-1 sm:col-span-1 md:col-span-6 bento-card border-brand-cyan/20 group overflow-hidden relative p-0 min-h-[200px] sm:min-h-[260px]">
-          <img src="/logo-b2b.png" alt="B2B Speed Dating" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
-            <span className="text-[9px] sm:text-[10px] font-mono text-brand-cyan uppercase tracking-widest mb-1">New Package</span>
-            <h4 className="text-lg sm:text-2xl font-display font-black uppercase tracking-tighter">B2B Speed Dating</h4>
-            <p className="text-[10px] sm:text-xs text-gray-400 mt-1 hidden sm:block">Fast-paced structured networking that actually works for business.</p>
+        <div className="col-span-2 md:col-span-12 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div className="bento-card border-brand-cyan/20 group overflow-hidden relative p-0 min-h-[220px] sm:min-h-[260px]">
+            <img src="/logo-b2b.png" alt="B2B Speed Dating" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
+              <span className="text-[9px] sm:text-[10px] font-mono text-brand-cyan uppercase tracking-widest mb-1">New Package</span>
+              <h4 className="text-lg sm:text-2xl font-display font-black uppercase tracking-tighter">B2B Speed Dating</h4>
+              <p className="text-[10px] sm:text-xs text-gray-400 mt-1">Fast-paced structured networking that actually works for business.</p>
+            </div>
           </div>
-        </div>
 
-        <div className="col-span-1 sm:col-span-1 md:col-span-6 bento-card border-brand-purple/20 group overflow-hidden relative p-0 min-h-[200px] sm:min-h-[260px]">
-          <img src="/logo-eventfunnels.png" alt="Event Funnels Workshop" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
-            <span className="text-[9px] sm:text-[10px] font-mono text-brand-purple uppercase tracking-widest mb-1">New Package</span>
-            <h4 className="text-lg sm:text-2xl font-display font-black uppercase tracking-tighter">Event Funnels Workshop</h4>
-            <p className="text-[10px] sm:text-xs text-gray-400 mt-1 hidden sm:block">Learn the system that turns one event into a client acquisition machine.</p>
+          <div className="bento-card border-brand-purple/20 group overflow-hidden relative p-0 min-h-[220px] sm:min-h-[260px]">
+            <img src="/logo-eventfunnels.png" alt="Event Funnels Workshop" className="w-full h-full object-cover object-center opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 absolute inset-0" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col justify-end p-4 sm:p-6">
+              <span className="text-[9px] sm:text-[10px] font-mono text-brand-purple uppercase tracking-widest mb-1">New Package</span>
+              <h4 className="text-lg sm:text-2xl font-display font-black uppercase tracking-tighter">Event Funnels Workshop</h4>
+              <p className="text-[10px] sm:text-xs text-gray-400 mt-1">Learn the system that turns one event into a client acquisition machine.</p>
+            </div>
           </div>
         </div>
 
@@ -372,12 +443,21 @@ const BentoGrid = () => {
 };
 
 const Gallery = () => {
-  const images = [
-    { src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80&w=800", alt: "Crowd Energy", size: "col-span-1 md:col-span-4" },
-    { src: "https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&q=80&w=800", alt: "DJ Performance", size: "col-span-1 md:col-span-8" },
-    { src: "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?auto=format&fit=crop&q=80&w=800", alt: "Gameshow Action", size: "col-span-1 md:col-span-6" },
-    { src: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?auto=format&fit=crop&q=80&w=800", alt: "Nightlife Vibes", size: "col-span-1 md:col-span-6" },
-    { src: "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?auto=format&fit=crop&q=80&w=800", alt: "Club Atmos", size: "col-span-2 md:col-span-12" }
+  const showGalleryUrl = "https://photos.app.goo.gl/ewyX6AW8U1boDf8z6";
+  const media = [
+    { type: 'image', src: "/Photos-3-001/20260401_212355.jpg", alt: "Gameshow crowd moment", size: "col-span-1 md:col-span-4" },
+    { type: 'image', src: "/Photos-3-001/20260401_212400.jpg", alt: "Interactive event energy", size: "col-span-1 md:col-span-4" },
+    { type: 'video', src: "/reels/20260404_210858.mp4", poster: "/Photos-3-001/20260404_210915.jpg", alt: "Event reel clip", size: "col-span-2 md:col-span-4" },
+    { type: 'image', src: "/Photos-3-001/20260401_212402.jpg", alt: "Live show reaction", size: "col-span-1 md:col-span-3" },
+    { type: 'image', src: "/Photos-3-001/20260401_212418.jpg", alt: "Audience participation", size: "col-span-1 md:col-span-3" },
+    { type: 'video', src: "/reels/20260404_225744.mp4", poster: "/Photos-3-001/20260405_000051.jpg", alt: "Show reel moment", size: "col-span-2 md:col-span-6" },
+    { type: 'image', src: "/Photos-3-001/20260401_212435.jpg", alt: "IRL event scene", size: "col-span-1 md:col-span-4" },
+    { type: 'image', src: "/Photos-3-001/20260401_220840.jpg", alt: "Gameshow floor", size: "col-span-1 md:col-span-4" },
+    { type: 'video', src: "/reels/20260405_000045.mp4", poster: "/Photos-3-001/20260405_000055.jpg", alt: "Late night event reel", size: "col-span-2 md:col-span-4" },
+    { type: 'image', src: "/Photos-3-001/20260404_210915.jpg", alt: "Live event proof", size: "col-span-1 md:col-span-6" },
+    { type: 'image', src: "/Photos-3-001/20260405_000051.jpg", alt: "Packed room energy", size: "col-span-1 md:col-span-6" },
+    { type: 'video', src: "/reels/20260412_013232.mp4", poster: "/Photos-3-001/20260418_120456.jpg", alt: "IRL reel footage", size: "col-span-2 md:col-span-6" },
+    { type: 'video', src: "/reels/20260425_223526.mp4", poster: "/Photos-3-001/20260418_140505.jpg", alt: "Event highlight reel", size: "col-span-2 md:col-span-6" },
   ];
 
   return (
@@ -387,27 +467,47 @@ const Gallery = () => {
         <h3 className="text-3xl sm:text-5xl font-display font-black uppercase tracking-tighter">Caught in the Act</h3>
       </div>
       <div className="grid grid-cols-2 md:grid-cols-12 gap-3 sm:gap-4 md:gap-6">
-        {images.map((img, i) => (
+        {media.map((item, i) => (
           <motion.div
             key={i}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: i * 0.1 }}
-            className={`${img.size} relative group`}
+            className={`${item.size} relative group`}
           >
             <div className="p-2 sm:p-4 bg-white rounded-sm shadow-xl transform group-hover:rotate-1 group-hover:scale-[1.02] transition-all duration-500 overflow-hidden">
               <div className="relative aspect-[4/3] overflow-hidden bg-gray-200">
-                <img 
-                  src={img.src} 
-                  alt={img.alt}
-                  className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
-                />
+                {item.type === 'video' ? (
+                  <>
+                    <video
+                      src={item.src}
+                      poster={item.poster}
+                      className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
+                      controls
+                      muted
+                      loop
+                      playsInline
+                      preload="metadata"
+                    />
+                    <div className="absolute top-3 left-3 inline-flex items-center gap-2 rounded-full bg-black/70 px-3 py-1 text-[9px] font-black uppercase tracking-widest text-brand-cyan">
+                      <Play className="w-3 h-3 fill-current" />
+                      Reel
+                    </div>
+                  </>
+                ) : (
+                  <img
+                    src={item.src}
+                    alt={item.alt}
+                    className="w-full h-full object-cover filter grayscale group-hover:grayscale-0 transition-all duration-700 ease-in-out"
+                  />
+                )}
                 <div className="absolute inset-0 bg-black/10 group-hover:bg-transparent transition-colors" />
               </div>
-              <div className="pt-2 sm:pt-4 pb-1 sm:pb-2 px-1">
+              <div className="pt-2 sm:pt-4 pb-1 sm:pb-2 px-1 relative">
+                <div className="absolute top-0 right-0 font-mono text-[6px] text-brand-cyan opacity-40">IMG_SOURCE: UPLOAD_0{i+1}</div>
                 <p className="font-mono text-[8px] sm:text-[10px] text-gray-400 uppercase tracking-widest mb-0.5 italic">#{String(i + 1).padStart(3, '0')}</p>
-                <p className="font-display font-bold text-black uppercase text-[9px] sm:text-xs tracking-tight truncate">{img.alt}</p>
+                <p className="font-display font-bold text-black uppercase text-[9px] sm:text-xs tracking-tight truncate">{item.alt}</p>
               </div>
               {/* Retro Polish Effect Overlay */}
               <div className="absolute inset-0 pointer-events-none bg-gradient-to-tr from-white/20 to-transparent mix-blend-overlay" />
@@ -416,6 +516,30 @@ const Gallery = () => {
             <div className="absolute -bottom-4 left-4 right-4 h-8 bg-black/40 blur-2xl -z-10 group-hover:bg-black/60 transition-all" />
           </motion.div>
         ))}
+
+        <motion.a
+          href={showGalleryUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: media.length * 0.1 }}
+          className="col-span-2 md:col-span-12 group relative overflow-hidden border border-brand-cyan/20 bg-white/[0.03] hover:bg-brand-cyan/10 transition-all p-5 sm:p-6"
+        >
+          <div className="absolute inset-0 bg-gradient-to-r from-brand-cyan/10 via-transparent to-brand-purple/10 opacity-60" />
+          <div className="relative flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+            <div>
+              <p className="text-[10px] font-mono text-brand-cyan uppercase tracking-[0.3em] mb-2">Show Gallery</p>
+              <h4 className="text-2xl sm:text-4xl font-display font-black uppercase tracking-tighter">IRL Event Photo Vault</h4>
+              <p className="mt-2 text-sm text-gray-400 max-w-2xl">Open the full shared Google Photos gallery from recent IRL events.</p>
+            </div>
+            <div className="inline-flex items-center gap-2 text-brand-cyan font-black uppercase tracking-widest text-xs sm:text-sm">
+              View Photos
+              <ExternalLink className="w-4 h-4" />
+            </div>
+          </div>
+        </motion.a>
       </div>
     </section>
   );
@@ -588,6 +712,8 @@ const BookingCalendar = ({ value, onChange }: { value: string; onChange: (date: 
 
 const InteractiveClearance = () => {
   const [step, setStep] = useState(0); // 0: Who, 1: Kind, 2: Type, 3: Form, 4: Success
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const [selections, setSelections] = useState({
     userType: '',
     eventFrequency: '',
@@ -599,7 +725,6 @@ const InteractiveClearance = () => {
     details: '',
     preferredDate: ''
   });
-  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const steps = [
     {
@@ -617,7 +742,7 @@ const InteractiveClearance = () => {
     {
       id: 'kind',
       title: 'WHAT KIND OF EVENT?',
-      subtitle: 'CLICK THE TITLE OF THE OPTION THAT BEST FITS YOU OR YOUR EVENT',
+      subtitle: 'SELECT FREQUENCY PROTOCOL',
       options: [
         { label: 'ONE-OFF', icon: <Calendar className="w-8 h-8" />, value: 'one-off' },
         { label: 'WEEKLY', icon: <Zap className="w-8 h-8" />, value: 'weekly' },
@@ -629,7 +754,7 @@ const InteractiveClearance = () => {
     {
       id: 'type',
       title: 'WHAT TYPE OF EVENT?',
-      subtitle: 'JACKPOTS | PRIZES • BIGGER AUDIENCES • THEMES | TICKETED',
+      subtitle: 'CORE SYSTEM INTERFACE SELECTION',
       options: [
         { label: 'GSNL', sub: 'GAME SHOW NIGHT LIVE', value: 'gsnl', img: '/logo-gsnl.jpg' },
         { label: 'HYBRID', sub: 'EVENTS & STREAMS', value: 'hybrid', img: '/logo-hybrid.png' },
@@ -641,6 +766,7 @@ const InteractiveClearance = () => {
     }
   ];
 
+
   const handleSelect = (field: string, value: string) => {
     setSelections(prev => ({ ...prev, [field]: value }));
     setStep(prev => prev + 1);
@@ -649,8 +775,9 @@ const InteractiveClearance = () => {
   const handleFinalSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError('');
     try {
-      await fetch('/api/leads', {
+      const response = await fetch('/api/leads', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -665,11 +792,15 @@ const InteractiveClearance = () => {
           preferredDate: selections.preferredDate || null,
         }),
       });
+      if (!response.ok) {
+        throw new Error(`Lead API returned ${response.status}`);
+      }
+      setStep(4);
     } catch (err) {
       console.error('Failed to submit lead:', err);
+      setSubmitError('The instant form is offline. Use WhatsApp, Telegram, or email below and we will pick it up directly.');
     } finally {
       setIsSubmitting(false);
-      setStep(4);
     }
   };
 
@@ -686,6 +817,7 @@ const InteractiveClearance = () => {
       details: '',
       preferredDate: ''
     });
+    setSubmitError('');
   };
 
   return (
@@ -744,7 +876,7 @@ const InteractiveClearance = () => {
                     <button
                       key={i}
                       onClick={() => handleSelect('experienceType', opt.value)}
-                      className="bento-card border border-white/5 p-4 flex flex-col items-center justify-center gap-3 group cursor-pointer hover:bg-white/5 transition-all"
+                      className="cyber-button border border-white/5 p-4 flex flex-col items-center justify-center gap-3 group cursor-pointer hover:bg-white/5 transition-all"
                     >
                       <div className="w-full aspect-square relative mb-2 overflow-hidden rounded-xl">
                         <img 
@@ -760,6 +892,12 @@ const InteractiveClearance = () => {
                             {opt.sticker}
                           </div>
                         )}
+                        {/* Scanning Line Effect */}
+                        <motion.div 
+                          animate={{ top: ['0%', '100%', '0%'] }}
+                          transition={{ repeat: Infinity, duration: 3, ease: "linear" }}
+                          className="absolute left-0 right-0 h-[1px] bg-brand-cyan/50 shadow-[0_0_10px_rgba(0,245,255,0.5)] z-10 pointer-events-none"
+                        />
                       </div>
                       <span className="text-sm font-display font-black text-white group-hover:text-brand-cyan transition-colors uppercase tracking-widest">{opt.label}</span>
                       <span className="text-[8px] font-mono text-gray-500 uppercase tracking-[0.2em]">{opt.sub}</span>
@@ -771,13 +909,18 @@ const InteractiveClearance = () => {
                     <button
                       key={i}
                       onClick={() => handleSelect(step === 0 ? 'userType' : 'eventFrequency', opt.value)}
-                      className="bento-card bg-white/5 border border-white/10 hover:border-brand-cyan p-5 sm:p-10 flex flex-col items-center justify-center gap-3 sm:gap-6 group cursor-pointer transition-all hover:bg-brand-cyan/10"
+                      className="cyber-button bg-white/5 border border-white/10 hover:border-brand-cyan p-5 sm:p-10 flex flex-col items-center justify-center gap-3 sm:gap-6 group cursor-pointer transition-all hover:bg-brand-cyan/10"
                     >
-                      <div className="text-brand-cyan group-hover:scale-125 transition-transform duration-500 [&>svg]:w-6 [&>svg]:h-6 sm:[&>svg]:w-8 sm:[&>svg]:h-8">
+                      <div className="text-brand-cyan group-hover:scale-125 transition-transform duration-500 [&>svg]:w-6 [&>svg]:h-6 sm:[&>svg]:w-8 sm:[&>svg]:h-8 relative">
+                        <div className="absolute inset-0 bg-brand-cyan/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity" />
                         {opt.icon}
                       </div>
                       <span className="text-sm sm:text-xl font-display font-black text-white uppercase tracking-tighter group-hover:text-brand-cyan">{opt.label}</span>
                       <div className="w-6 sm:w-8 h-[2px] bg-white/10 group-hover:bg-brand-cyan transition-all" />
+                      
+                      {/* Corner Accents */}
+                      <div className="absolute top-2 left-2 w-2 h-2 border-t border-l border-white/20 group-hover:border-brand-cyan" />
+                      <div className="absolute bottom-2 right-2 w-2 h-2 border-b border-r border-white/20 group-hover:border-brand-cyan" />
                     </button>
                   ))
                 )}
@@ -861,6 +1004,12 @@ const InteractiveClearance = () => {
                 >
                   {isSubmitting ? 'ENCRYPTING...' : 'SECURE THE VIBE'}
                 </button>
+                {submitError && (
+                  <div className="mt-4 rounded-xl border border-brand-purple/30 bg-brand-purple/10 p-4 text-center">
+                    <p className="mb-4 text-xs font-mono uppercase tracking-widest text-gray-300 leading-relaxed">{submitError}</p>
+                    <ContactButtons />
+                  </div>
+                )}
               </form>
             </div>
           ) : (
@@ -872,6 +1021,9 @@ const InteractiveClearance = () => {
                <p className="text-base sm:text-xl text-gray-400 font-light max-w-md mx-auto mb-6 px-2">
                  Clearance is being processed. Our team will ping you back if you are cleared for the vibe.
                </p>
+               <div className="mb-8 flex justify-center">
+                 <ContactButtons />
+               </div>
                {selections.preferredDate && (
                  <div className="inline-flex items-center gap-2 px-4 py-2 bg-brand-cyan/10 border border-brand-cyan/30 rounded-xl mb-8">
                    <Calendar className="w-4 h-4 text-brand-cyan" />
@@ -912,9 +1064,12 @@ const Footer = () => (
             <div className="w-8 h-8 bg-brand-cyan rounded-lg flex items-center justify-center font-bold text-black italic">IRL</div>
             <span className="font-display font-bold uppercase tracking-tighter">Interactive Events</span>
          </div>
-         <p className="max-w-xs text-sm text-gray-500 leading-relaxed uppercase font-light tracking-wide">
+        <p className="max-w-xs text-sm text-gray-500 leading-relaxed uppercase font-light tracking-wide">
            The underground standard for real human connection. Unfiltered gameshows, unscripted nights, and the energy you can't find online.
          </p>
+         <div className="mt-6">
+           <ContactButtons compact />
+         </div>
        </div>
        
        <div className="grid grid-cols-2 sm:grid-cols-3 gap-12">
@@ -956,13 +1111,23 @@ const Footer = () => (
 );
 
 export default function App() {
+  useEffect(() => {
+    if (!window.location.hash) return;
+    const target = document.querySelector(window.location.hash);
+    window.requestAnimationFrame(() => target?.scrollIntoView());
+  }, []);
+
   return (
-    <div className="min-h-screen bg-deep-bg text-white selection:bg-brand-cyan selection:text-black scroll-smooth">
+    <div className="min-h-screen bg-deep-bg text-white selection:bg-brand-cyan selection:text-black scroll-smooth relative overflow-x-hidden">
+      <ScanlineOverlay />
+      <CyberGridGlobal />
       <Navbar />
       
-      <main>
+      <main className="space-y-0">
         <Hero />
         
+        <InteractiveClearance />
+
         <BentoGrid />
         
         <section className="py-16 sm:py-24 px-4 sm:px-6 text-center max-w-4xl mx-auto">
@@ -983,8 +1148,6 @@ export default function App() {
         <ReviewSection />
         
         <Gallery />
-        
-        <InteractiveClearance />
       </main>
 
       <Footer />

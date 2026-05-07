@@ -25,6 +25,73 @@
   }
 }
 
+@keyframes glitch {
+  0% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(-2px, -2px); }
+  60% { transform: translate(2px, 2px); }
+  80% { transform: translate(2px, -2px); }
+  100% { transform: translate(0); }
+}
+
+.glitch-hover:hover {
+  animation: glitch 0.3s cubic-bezier(.25,.46,.45,.94) both infinite;
+}
+
+.glitch-entry {
+  animation: glitch 0.5s cubic-bezier(.25,.46,.45,.94) both 3;
+}
+
+.scanline-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    rgba(0, 245, 255, 0.02) 50%,
+    transparent
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 9999;
+  animation: scanline 15s linear infinite;
+}
+
+.cyber-grid-global {
+  position: fixed;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(0, 245, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 245, 255, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.cyber-button {
+  clip-path: polygon(
+    0 0,
+    calc(100% - 12px) 0,
+    100% 12px,
+    100% 100%,
+    12px 100%,
+    0 calc(100% - 12px)
+  );
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.cyber-button::before {
+  content: '';
+  @apply absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full skew-x-12;
+}
+
+.cyber-button:hover::before {
+  @apply translate-x-full transition-transform duration-700;
+}
+
 @layer utilities {
   .text-glow-cyan {
     text-shadow: 0 0 10px rgba(0, 245, 255, 0.6);
@@ -36,13 +103,39 @@
     @apply bg-white/5 backdrop-blur-xl border border-white/10;
   }
   .bento-card {
-    @apply bg-dark-card border border-white/5 rounded-3xl p-6 overflow-hidden relative transition-all duration-500;
+    @apply bg-dark-card border border-white/5 rounded-sm p-6 overflow-hidden relative transition-all duration-500;
+    /* Removed rounded-3xl for sharper tech look */
+  }
+  .bento-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--color-brand-cyan), transparent);
+    box-shadow: 0 0 10px var(--color-brand-cyan);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+    z-index: 20;
+  }
+  .bento-card:hover::after {
+    opacity: 0.5;
+    animation: scan-line-move 2s linear infinite;
+  }
+  @keyframes scan-line-move {
+    0% { top: 0%; }
+    100% { top: 100%; }
   }
   .neon-border-cyan {
     @apply border-brand-cyan/20 hover:border-brand-cyan/50 shadow-neon-cyan;
   }
   .neon-border-purple {
     @apply border-brand-purple/20 hover:border-brand-purple/50 shadow-neon-purple;
+  }
+  .flicker {
+    animation: flicker 4s infinite;
   }
 }
 
@@ -54,3 +147,4 @@
 .float-animation {
   animation: float 6s ease-in-out infinite;
 }
+
