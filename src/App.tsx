@@ -396,6 +396,9 @@ const BentoGrid = () => {
             <div className="absolute -top-1 -right-1 w-2 h-2 bg-brand-cyan rounded-full animate-ping" />
           </div>
           <span className="text-[10px] font-mono uppercase tracking-widest text-brand-cyan">Live DJ Sets Included</span>
+          <span className="mt-2 max-w-xs text-[9px] font-black uppercase tracking-widest text-gray-400 leading-relaxed">
+            Live Streaming • Live Bands • Live Performance Available
+          </span>
         </div>
 
         {/* Package Cards Row */}
@@ -445,8 +448,6 @@ const BentoGrid = () => {
 const Gallery = () => {
   const showGalleryUrl = "https://photos.app.goo.gl/ewyX6AW8U1boDf8z6";
   const media = [
-    { type: 'image', src: "/Photos-3-001/20260401_212355.jpg", alt: "Gameshow crowd moment", size: "col-span-1 md:col-span-4" },
-    { type: 'image', src: "/Photos-3-001/20260401_212400.jpg", alt: "Interactive event energy", size: "col-span-1 md:col-span-4" },
     { type: 'video', src: "/reels/20260404_210858.mp4", poster: "/Photos-3-001/20260404_210915.jpg", alt: "Event reel clip", size: "col-span-2 md:col-span-4" },
     { type: 'image', src: "/Photos-3-001/20260401_212402.jpg", alt: "Live show reaction", size: "col-span-1 md:col-span-3" },
     { type: 'image', src: "/Photos-3-001/20260401_212418.jpg", alt: "Audience participation", size: "col-span-1 md:col-span-3" },
